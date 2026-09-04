@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zainiphpdev.github.io/sitemap.xml
