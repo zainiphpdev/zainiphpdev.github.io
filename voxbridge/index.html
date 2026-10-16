@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voxbridge | Click-to-call and call logging for SuiteCRM</title>
+<meta name="description" content="Voxbridge connects SuiteCRM to your Asterisk phone system with click-to-call, live call popups, automatic call logging, and a built-in WebRTC browser softphone.">
+<link rel="icon" type="image/png" href="img/logo.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Voxbridge | Click-to-call and call logging for SuiteCRM">
+<meta property="og:description" content="Put the phone inside SuiteCRM: click-to-call, live call popups, automatic call logging, and call recordings, over Asterisk or a built-in WebRTC browser phone.">
+<meta property="og:image" content="img/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Voxbridge | Click-to-call and call logging for SuiteCRM">
+<meta name="twitter:description" content="Put the phone inside SuiteCRM: click-to-call, live popups, and automatic call logging, over Asterisk or a WebRTC browser phone.">
+<meta name="twitter:image" content="img/og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<style>
+:root{
+  --bg:#12151d; --panel:#171a23; --panel2:#1c2029; --line:#262b36;
+  --ink:#f6f4ef; --muted:#b7b8c2; --dim:#83859a;
+  --amber:#e8974a; --copper:#c96a2e; --green:#6fd39a;
+  --radius:16px; --maxw:1120px;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#f6f4ef; --panel:#ffffff; --panel2:#efece2; --line:#00000017;
+    --ink:#181a20; --muted:#4c4e59; --dim:#787a8c;
+    --amber:#c96a2e; --copper:#c96a2e; --green:#1f8a54;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#f6f4ef; --panel:#ffffff; --panel2:#efece2; --line:#00000017;
+  --ink:#181a20; --muted:#4c4e59; --dim:#787a8c;
+  --amber:#c96a2e; --copper:#c96a2e; --green:#1f8a54;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:"Sora",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:100%;margin:0 auto;padding:0 4vw}
+.amber{color:var(--amber)}
+h1,h2,h3{line-height:1.15;margin:0 0 .4em;font-weight:800;letter-spacing:-.01em}
+h2{font-size:clamp(1.6rem,3.5vw,2.4rem)}
+p{margin:0 0 1rem}
+.muted{color:var(--muted)}
+.btn{
+  display:inline-flex;align-items:center;gap:.5rem;font-weight:700;font-size:.98rem;
+  padding:.8rem 1.4rem;border-radius:999px;border:1px solid transparent;cursor:pointer;transition:.18s;
+}
+.btn-primary{background:linear-gradient(135deg,var(--amber),var(--copper));color:#1a1206}
+.btn-primary:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn-ghost{border-color:var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--amber);color:var(--amber)}
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;background:none;border:1px solid var(--line);border-radius:.5rem;width:38px;height:38px;color:var(--ink);cursor:pointer;flex:none}
+.theme-toggle:hover{border-color:var(--amber);color:var(--amber)}
+.theme-toggle svg{width:18px;height:18px}
+.theme-toggle .icon-sun{display:none}
+:root[data-theme="light"] .theme-toggle .icon-moon{display:none}
+:root[data-theme="light"] .theme-toggle .icon-sun{display:block}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]) .theme-toggle .icon-moon{display:none}
+  :root:not([data-theme="dark"]) .theme-toggle .icon-sun{display:block}
+}
+.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:.76rem;font-weight:700;color:var(--amber)}
+
+/* nav */
+header.nav{position:sticky;top:0;z-index:20;background:rgba(18,21,29,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:66px}
+.brand{display:flex;align-items:center;gap:.6rem;font-weight:800;font-size:1.15rem}
+.brand img{width:34px;height:34px;border-radius:9px}
+.nav-right{display:flex;align-items:center;gap:1.4rem}
+.nav-links{display:flex;align-items:center;gap:1.6rem}
+.nav-links a.lnk{color:var(--muted);font-size:.95rem;font-weight:500}
+.nav-links a.lnk:hover{color:var(--ink)}
+.menu-btn{display:none}
+
+/* hero */
+.hero{padding:72px 0 40px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(2.1rem,5vw,3.4rem)}
+.trial-chip{display:inline-flex;align-items:center;gap:.5rem;background:rgba(111,211,154,.12);color:var(--green);
+  border:1px solid rgba(111,211,154,.3);padding:.3rem .8rem;border-radius:999px;font-size:.82rem;font-weight:600;margin-bottom:1.2rem}
+.hero-cta{display:flex;gap:.8rem;flex-wrap:wrap;margin:1.4rem 0 1rem}
+.byline{font-size:.86rem;color:var(--dim)}
+.byline a{color:var(--amber)}
+.shot{width:100%;border-radius:var(--radius);border:1px solid var(--line);box-shadow:0 30px 60px rgba(0,0,0,.45);display:block}
+
+/* compat bar */
+.compat{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;background:var(--panel)}
+.compat-in{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;justify-content:center}
+.compat .label{color:var(--dim);font-size:.85rem;font-weight:600;margin-right:.4rem}
+.pill{border:1px solid var(--line);color:var(--muted);padding:.35rem .9rem;border-radius:999px;font-size:.85rem;font-weight:600}
+
+/* sections */
+section{padding:72px 0}
+.sec-head{max-width:680px;margin:0 auto 42px;text-align:center}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:26px}
+.card:hover{border-color:rgba(232,151,74,.4)}
+.ic{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  background:rgba(232,151,74,.12);color:var(--amber);margin-bottom:14px}
+.card h3{font-size:1.12rem;margin-bottom:.35rem}
+.card p{color:var(--muted);font-size:.95rem;margin:0}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;counter-reset:s}
+.step{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:26px;position:relative}
+.step .num{font-size:.8rem;font-weight:800;color:var(--copper);letter-spacing:.1em}
+.step h3{font-size:1.1rem;margin:.3rem 0 .3rem}
+.step p{color:var(--muted);font-size:.94rem;margin:0}
+
+/* showcase */
+.show{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+.show.rev{direction:rtl}.show.rev>*{direction:ltr}
+.show h3{font-size:1.4rem}
+.show p{color:var(--muted)}
+.show .shot{box-shadow:0 20px 40px rgba(0,0,0,.4)}
+.showcase-wrap{display:flex;flex-direction:column;gap:56px}
+
+/* pricing */
+.price-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;max-width:760px;margin:0 auto}
+.plan{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:30px;text-align:center}
+.plan.best{border-color:var(--amber);position:relative}
+.plan.best .tag{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--amber),var(--copper));
+  color:#1a1206;font-size:.72rem;font-weight:800;padding:.25rem .8rem;border-radius:999px;text-transform:uppercase;letter-spacing:.08em}
+.plan .pname{text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;color:var(--amber);font-weight:700}
+.plan .amt{font-size:2.6rem;font-weight:800;margin:.3rem 0 0}
+.plan .per{color:var(--dim);font-size:.9rem;margin-bottom:1rem}
+.plan ul{list-style:none;padding:0;margin:0 0 1.4rem;text-align:left;display:inline-block}
+.plan li{color:var(--muted);font-size:.94rem;padding:.3rem 0 .3rem 1.6rem;position:relative}
+.plan li::before{content:"";position:absolute;left:0;top:.65rem;width:10px;height:10px;border-radius:50%;
+  background:var(--green);box-shadow:0 0 0 3px rgba(111,211,154,.15)}
+.lic-note{text-align:center;color:var(--dim);font-size:.9rem;margin-top:1.6rem}
+
+/* cta band */
+.band{background:linear-gradient(135deg,#1b2130,#141922);border:1px solid var(--line);border-radius:22px;padding:48px;text-align:center}
+.band h2{margin-bottom:.4rem}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:64px 0 36px;background:var(--bg)}
+.contact-band{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:52px 32px;text-align:center}
+.contact-band h2{font-size:clamp(1.8rem,4vw,2.6rem)}
+.contact-row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.cbtn{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--line);background:var(--panel2);
+  color:var(--ink);font-size:.92rem;font-weight:500;padding:.7rem 1.2rem;border-radius:12px;transition:.18s}
+.cbtn:hover{border-color:var(--amber);color:var(--amber)}
+.copyright-line{text-align:center;color:var(--dim);font-size:.88rem;margin-top:30px}
+
+@media(max-width:860px){
+  .hero-grid,.show,.grid3,.steps,.price-grid{grid-template-columns:1fr}
+  .show.rev{direction:ltr}
+  .nav-links{display:none}
+  .hero{padding:48px 0 20px}
+  section{padding:54px 0}
+  .band{padding:32px 20px}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><img src="img/logo.png" alt="Voxbridge logo">Voxbridge</a>
+    <div class="nav-right">
+    <nav class="nav-links">
+      <a class="lnk" href="#features">Features</a>
+      <a class="lnk" href="#how">How it works</a>
+      <a class="lnk" href="#pricing">Pricing</a>
+      <a class="btn btn-primary" href="https://store.suitecrm.com/addons/voxbridge">Get it on SuiteCRM Store</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle light / dark theme">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+    </div>
+  </div>
+</header>
+
+<a id="top"></a>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="trial-chip">● Free 30 day trial</span>
+      <h1>Put the phone <span class="amber">inside SuiteCRM</span></h1>
+      <p class="muted" style="font-size:1.1rem">
+        Voxbridge adds click-to-call, live call popups, automatic call logging, and call recordings to SuiteCRM,
+        over your Asterisk extensions or a built-in WebRTC browser phone.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="https://store.suitecrm.com/addons/voxbridge">Start a free trial</a>
+        <a class="btn btn-ghost" href="#how">See how it works</a>
+      </div>
+      <p class="byline">A product by <a href="https://zainiphpdev.github.io/">Syed Zain Ul Abedin</a>, Full Stack Developer</p>
+    </div>
+    <div>
+      <img class="shot" src="img/call-popup.jpg" alt="Voxbridge call popup on a SuiteCRM record">
+    </div>
+  </div>
+</section>
+
+<div class="compat">
+  <div class="wrap compat-in">
+    <span class="label">Works with</span>
+    <span class="pill">Asterisk</span>
+    <span class="pill">FreePBX</span>
+    <span class="pill">Elastix</span>
+    <span class="pill">VICIDial</span>
+    <span class="pill">Any SIP / WebSocket gateway</span>
+  </div>
+</div>
+
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">What it does</span>
+      <h2>Everything your team needs around a call</h2>
+      <p class="muted">No more switching between your phone and your CRM, and no more calls that never get logged.</p>
+    </div>
+    <div class="grid3">
+      <div class="card">
+        <div class="ic">☎</div>
+        <h3>Click-to-call</h3>
+        <p>Dial any phone number from Accounts, Contacts, Leads, and custom modules, across detail views, list views, and subpanels.</p>
+      </div>
+      <div class="card">
+        <div class="ic">◱</div>
+        <h3>Live call popup</h3>
+        <p>A floating card shows the matched caller with a timer, a disposition, and a notes box that saves straight to the call record.</p>
+      </div>
+      <div class="card">
+        <div class="ic">✎</div>
+        <h3>Automatic logging</h3>
+        <p>Direction, status, duration, disposition, recording link, and the related record are captured with zero typing.</p>
+      </div>
+      <div class="card">
+        <div class="ic">⇄</div>
+        <h3>Two ways to call</h3>
+        <p>Ring your Asterisk desk extensions over AMI, or place and receive calls in the browser with the built-in WebRTC softphone.</p>
+      </div>
+      <div class="card">
+        <div class="ic">⌕</div>
+        <h3>Smart caller lookup</h3>
+        <p>Inbound and outbound numbers are matched against every phone field in your instance and linked to the right record.</p>
+      </div>
+      <div class="card">
+        <div class="ic">●</div>
+        <h3>Call recordings</h3>
+        <p>Each call record carries a link to the recording your PBX produced, so the whole conversation is one click away.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how" style="background:var(--panel)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">How it works</span>
+      <h2>Live in three steps</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">STEP 01</div>
+        <h3>Install</h3>
+        <p>Upload the package in Module Loader, accept the licence, and run Quick Repair. The module, tables, fields, and admin screens are added in one step.</p>
+      </div>
+      <div class="step">
+        <div class="num">STEP 02</div>
+        <h3>Configure</h3>
+        <p>Add your PBX server and WebRTC settings on one admin screen, then set each user's extension and softphone.</p>
+      </div>
+      <div class="step">
+        <div class="num">STEP 03</div>
+        <h3>Call</h3>
+        <p>Click any number to dial. The popup identifies the caller, and the call logs itself to the right record.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap showcase-wrap">
+    <div class="show">
+      <div>
+        <span class="eyebrow">In the record</span>
+        <h3>See who is calling, log it in seconds</h3>
+        <p>On every outbound and inbound call, a draggable popup resolves the caller across all your modules. Pick a disposition, add a note, and save. It never blocks the page behind it.</p>
+      </div>
+      <div><img class="shot" src="img/call-popup.jpg" alt="Voxbridge call popup"></div>
+    </div>
+    <div class="show rev">
+      <div>
+        <span class="eyebrow">For admins</span>
+        <h3>One screen to connect your phone system</h3>
+        <p>Add Asterisk/FreePBX servers for desk-phone dialling and your WSS gateway for the browser softphone. Per-user extensions and softphone credentials live on each user's profile.</p>
+      </div>
+      <div><img class="shot" src="img/config.jpg" alt="Voxbridge configuration screen"></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" style="background:var(--panel)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Pricing</span>
+      <h2>Try any plan free for 30 days</h2>
+      <p class="muted">Unlimited users. Cancel any time.</p>
+    </div>
+    <div class="price-grid">
+      <div class="plan">
+        <div class="pname">Monthly</div>
+        <div class="amt">$59</div>
+        <div class="per">per month</div>
+        <ul>
+          <li>Free 30 day trial</li>
+          <li>Unlimited users</li>
+          <li>Outstanding support</li>
+          <li>SuiteCRM 8.x</li>
+        </ul>
+        <div><a class="btn btn-ghost" href="https://store.suitecrm.com/addons/voxbridge">Start a free trial</a></div>
+      </div>
+      <div class="plan best">
+        <span class="tag">Best value</span>
+        <div class="pname">Yearly</div>
+        <div class="amt">$699</div>
+        <div class="per">per year</div>
+        <ul>
+          <li>Free 30 day trial</li>
+          <li>Unlimited users</li>
+          <li>Outstanding support</li>
+          <li>SuiteCRM 8.x</li>
+        </ul>
+        <div><a class="btn btn-primary" href="https://store.suitecrm.com/addons/voxbridge">Start a free trial</a></div>
+      </div>
+    </div>
+    <p class="lic-note">Licensed for one production instance and unlimited test and dev instances.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="band">
+      <h2>Stop switching between your phone and your CRM</h2>
+      <p class="muted" style="max-width:560px;margin:0 auto 1.4rem">
+        Voxbridge puts click-to-call, popups, and automatic logging right inside SuiteCRM. Try it free for 30 days.
+      </p>
+      <a class="btn btn-primary" href="https://store.suitecrm.com/addons/voxbridge">Get Voxbridge on the SuiteCRM Store</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="contact-band">
+      <span class="eyebrow">$ ECHO "LET'S BUILD"</span>
+      <h2>Have a system that needs building?</h2>
+      <p class="muted" style="max-width:520px;margin:0 auto 2rem">
+        If you have a business problem that needs real software behind it, I would like to hear about it.
+        Based in Peshawar, working remote.
+      </p>
+      <div class="contact-row">
+        <a class="cbtn" href="mailto:zainiphpdev@gmail.com">✉ zainiphpdev@gmail.com</a>
+        <a class="cbtn" href="tel:+923329593441">☎ +92 332 9593441</a>
+        <a class="cbtn" href="https://wa.me/923329593441">WhatsApp</a>
+        <a class="cbtn" href="https://linkedin.com/in/zainiphpdev">in&nbsp; linkedin.com/in/zainiphpdev</a>
+        <a class="cbtn" href="https://github.com/zainiphpdev">github.com/zainiphpdev</a>
+      </div>
+    </div>
+    <div class="copyright-line">© 2026 Syed Zain Ul Abedin · Peshawar, Pakistan</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var themeBtn = document.getElementById('themeToggle');
+  function currentTheme(){
+    var stored = document.documentElement.getAttribute('data-theme');
+    if (stored) return stored;
+    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  }
+  themeBtn.addEventListener('click', function(){
+    var next = currentTheme() === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    try{ localStorage.setItem('theme', next); }catch(e){}
+  });
+})();
+</script>
+</body>
+</html>
