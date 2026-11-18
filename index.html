@@ -30,6 +30,7 @@
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('skip-loader');
     })();
   </script>
+  <link rel="preload" href="assets/img/zain-portrait.jpg" as="image" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -45,6 +46,7 @@
   <!-- Opening: greetings, then a curved curtain lifts -->
   <div class="loader" data-loader aria-hidden="true">
     <p class="loader__word"><span class="loader__dot"></span><span data-loader-word>Hello</span></p>
+    <img class="loader__photo" src="assets/img/zain-portrait.jpg" alt="" width="900" height="1656" fetchpriority="high" decoding="async">
     <svg class="loader__curve" viewBox="0 0 1000 100" preserveAspectRatio="none"><path data-loader-path d="M0 0 L1000 0 Q500 100 0 0 Z"/></svg>
   </div>
 

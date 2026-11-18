@@ -124,7 +124,6 @@
     const path = $('[data-loader-path]', loader);
     const words = ['Hello', 'Assalam o Alaikum', 'Bonjour', 'Hola', 'Ciao', 'Hallo', 'Merhaba', 'مرحبا'];
     let i = 0;
-    loader.classList.add('is-on');
     const lift = () => {
       loader.classList.add('is-leaving');
       const start = performance.now(), dur = 1000;
@@ -143,7 +142,12 @@
       wordEl.textContent = words[i];
       setTimeout(next, i === words.length - 1 ? 320 : 180);
     };
-    setTimeout(next, 600);
+    const photo = $('.loader__photo', loader);
+    const photoReady = photo.decode ? photo.decode().catch(() => {}) : Promise.resolve();
+    Promise.race([photoReady, new Promise(r => setTimeout(r, 1200))]).then(() => {
+      loader.classList.add('is-on');
+      setTimeout(next, 600);
+    });
   }
 
   /* Nav: active link */
