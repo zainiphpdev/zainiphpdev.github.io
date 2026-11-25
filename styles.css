@@ -136,10 +136,12 @@ p, li, dd { text-wrap: pretty; }
 .btn--lg { padding: var(--s-200) var(--s-400); }
 .btn--ink { background: var(--ink); color: var(--on-ink); }
 .btn--line { border: 1px solid var(--line-strong); color: var(--text); }
-.btn__label, .btn__arrow { position: relative; z-index: 1; }
+.btn__label, .btn__arrow, .btn__wa { position: relative; z-index: 1; }
 .btn__arrow { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: transform 500ms var(--ease); }
+.btn__wa { width: 18px; height: 18px; fill: currentColor; transition: transform 500ms var(--ease); }
 .btn:hover .btn__arrow { transform: rotate(45deg); }
 .btn:hover .btn__cal { transform: rotate(-8deg) scale(1.08); }
+.btn:hover .btn__wa { transform: scale(1.12); }
 .btn:active { transform: scale(0.98); }
 
 .fill {
