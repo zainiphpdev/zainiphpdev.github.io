@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>document.documentElement.className='fonts-loading';(function(){function r(){document.documentElement.className='fonts-ready';}if(document.fonts&&document.fonts.ready){document.fonts.ready.then(r);}setTimeout(r,1400);})();</script>
   <title>RivetForm, a free WordPress form plugin by Syed Zain Ul Abedin</title>
   <meta name="description" content="RivetForm is a free WordPress form builder built solo from scratch: a drag and drop builder, a lead inbox with duplicate detection, webhooks, WhatsApp alerts, Stripe payments and a measured 10 KB footprint.">
   <meta name="theme-color" content="#111111">
@@ -20,13 +21,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=1">
+  <link rel="stylesheet" href="style.css?v=2">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"SoftwareApplication","name":"RivetForm","applicationCategory":"WordPress Plugin","operatingSystem":"WordPress","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"creator":{"@type":"Person","name":"Syed Zain Ul Abedin","url":"https://zainiphpdev.github.io/"}}
   </script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"><span></span></div>
 
   <header class="nav">
     <a class="nav__brand" href="#top" aria-label="RivetForm">
@@ -53,10 +55,10 @@
           <a class="btn btn--ghost" href="#features">What it does</a>
         </div>
         <dl class="hero__facts reveal">
-          <div><dt>Field types</dt><dd>17</dd></div>
-          <div><dt>Page weight with a form</dt><dd>~10 KB</dd></div>
-          <div><dt>Automated alert tests passing</dt><dd>32 / 32</dd></div>
-          <div><dt>Built by</dt><dd>One developer</dd></div>
+          <div><dt>Field types</dt><dd><span class="count" data-count="17">0</span></dd></div>
+          <div><dt>Gzipped, with a form</dt><dd>~<span class="count" data-count="10">0</span> KB</dd></div>
+          <div><dt>On pages without a form</dt><dd><span class="count" data-count="0">0</span> KB</dd></div>
+          <div><dt>Added server time</dt><dd>~<span class="count" data-count="1">0</span> ms</dd></div>
         </dl>
       </div>
     </section>
@@ -169,15 +171,21 @@
             <img src="img/analytics.jpg" alt="Form analytics showing views, starts, submissions, conversion rate and a funnel" width="1440" height="900" loading="lazy">
             <figcaption>Cookieless analytics and funnel</figcaption>
           </figure>
-          <figure class="frame reveal">
+          <figure class="frame frame--span reveal">
             <div class="frame__bar" aria-hidden="true"><span></span><span></span><span></span></div>
             <img src="img/lead.jpg" alt="One lead's detail view with stage, owner, follow up date, delivery status and every answer" width="1440" height="900" loading="lazy">
             <figcaption>One lead, start to finish</figcaption>
           </figure>
+        </div>
+        <div class="showcase">
+          <div class="showcase__copy reveal">
+            <p class="label">The visitor side</p>
+            <h3>A form, as a visitor actually sees it.</h3>
+            <p>No heavy theme, no jQuery, no layout shift. The same form the builder produced, rendered on the default WordPress theme, errors landing under the exact field they belong to.</p>
+          </div>
           <figure class="frame frame--tall reveal">
             <div class="frame__bar" aria-hidden="true"><span></span><span></span><span></span></div>
             <img src="img/form.jpg" alt="A live RivetForm form on the default WordPress theme, as a visitor sees it" width="805" height="1117" loading="lazy">
-            <figcaption>A form, as a visitor sees it</figcaption>
           </figure>
         </div>
       </div>
@@ -189,9 +197,9 @@
         <p class="label label--light reveal">Measured, not estimated</p>
         <h2 class="h2 h2--light reveal">Fast is a feature.</h2>
         <div class="perf__grid">
-          <div class="perf__stat reveal"><span class="perf__num">~10 KB</span><span class="perf__cap">gzipped CSS and JS on a page that has a form, with no jQuery</span></div>
-          <div class="perf__stat reveal"><span class="perf__num">0 KB</span><span class="perf__cap">and zero extra database queries on pages without a form</span></div>
-          <div class="perf__stat reveal"><span class="perf__num">~1 ms</span><span class="perf__cap">added server time, median of 80 warm requests on PHP 8.2 with OPcache</span></div>
+          <div class="perf__stat reveal"><span class="perf__num">~<span class="count" data-count="10">0</span> KB</span><span class="perf__cap">gzipped CSS and JS on a page that has a form, with no jQuery</span></div>
+          <div class="perf__stat reveal"><span class="perf__num"><span class="count" data-count="0">0</span> KB</span><span class="perf__cap">and zero extra database queries on pages without a form</span></div>
+          <div class="perf__stat reveal"><span class="perf__num">~<span class="count" data-count="1">0</span> ms</span><span class="perf__cap">added server time, median of 80 warm requests on PHP 8.2 with OPcache</span></div>
         </div>
       </div>
     </section>
@@ -201,14 +209,14 @@
       <div class="wrap rigor__wrap">
         <div>
           <p class="label reveal">How it was verified</p>
-          <h2 class="h2 reveal">Tested like it ships to thousands.</h2>
-          <p class="rigor__sub reveal">Delivery is the part that fails quietly, so I built a sandbox that intercepts outgoing calls and simulates Twilio, Meta and CallMeBot against their real documented rules: error codes, template approval states and rate limits.</p>
+          <h2 class="h2 reveal">Every alert path, run against the real API rules.</h2>
+          <p class="rigor__sub reveal">Delivery is the part that fails quietly. So I built a sandbox that intercepts outgoing calls and answers them the way Twilio, Meta and CallMeBot actually do: their documented error codes, template approval states and rate limits.</p>
         </div>
         <ul class="checks reveal">
-          <li><span>32 of 32</span> automated cases pass, covering SMS, WhatsApp free text, templates, malformed input, wrong credentials and unverified recipients</li>
-          <li><span>Real errors</span> checked against the live services with fake credentials, so parsing matches reality, not just the sandbox</li>
-          <li><span>Full pipeline</span> run with real test leads: storage, lead inbox, duplicate flag, CSV export and delivery logging</li>
-          <li><span>Plugin Check</span>, the official WordPress.org linting tool, passes clean</li>
+          <li><span>32 of 32 cases pass</span> Covering SMS, WhatsApp free text, templates, malformed input, wrong credentials and unverified recipients.</li>
+          <li><span>Parsing checked against the live services</span> Real error responses pulled with fake credentials, so the parser matches the real APIs, not just the sandbox.</li>
+          <li><span>Full pipeline run with real leads</span> Storage, lead inbox, duplicate flag, CSV export and delivery logging, end to end.</li>
+          <li><span>Plugin Check passes clean</span> The official WordPress.org linting tool, run on the build.</li>
         </ul>
       </div>
     </section>
@@ -229,10 +237,14 @@
         </div>
         <div class="stack__col reveal">
           <p class="label">Works with</p>
-          <ul class="tags">
-            <li>Contact Form 7</li><li>Gravity Forms</li><li>Zapier</li><li>Make</li><li>n8n</li><li>Brevo</li><li>Stripe</li><li>Twilio</li><li>CallMeBot</li><li>WhatsApp</li><li>Meta Cloud API</li><li>reCAPTCHA</li><li>Turnstile</li><li>Google Places</li>
-          </ul>
+          <p class="stack__intro">Fourteen services plug straight in, from CF7 and Gravity Forms migration to Stripe, Twilio and the Meta Cloud API.</p>
           <p class="stack__note">Named for compatibility only. No affiliation or endorsement.</p>
+        </div>
+      </div>
+      <div class="marquee reveal" aria-hidden="true">
+        <div class="marquee__row">
+          <span>Contact Form 7</span><span>Gravity Forms</span><span>Zapier</span><span>Make</span><span>n8n</span><span>Brevo</span><span>Stripe</span><span>Twilio</span><span>CallMeBot</span><span>WhatsApp</span><span>Meta Cloud API</span><span>reCAPTCHA</span><span>Turnstile</span><span>Google Places</span>
+          <span>Contact Form 7</span><span>Gravity Forms</span><span>Zapier</span><span>Make</span><span>n8n</span><span>Brevo</span><span>Stripe</span><span>Twilio</span><span>CallMeBot</span><span>WhatsApp</span><span>Meta Cloud API</span><span>reCAPTCHA</span><span>Turnstile</span><span>Google Places</span>
         </div>
       </div>
     </section>
@@ -240,7 +252,7 @@
     <!-- CTA -->
     <section class="section cta" id="contact">
       <div class="wrap cta__wrap">
-        <p class="label label--light reveal">Built solo by Syed Zain Ul Abedin</p>
+        <p class="label label--light reveal">An independent plugin by Syed Zain Ul Abedin</p>
         <h2 class="cta__title reveal">Want this kind of plugin, or the developer who built it?</h2>
         <div class="cta__btns reveal">
           <a class="btn btn--red" href="https://zainiphpdev.github.io/">See Zain's portfolio</a>
@@ -261,10 +273,52 @@
 
   <script>
     (function () {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Staggered reveal on scroll, counting up any numbers inside
+      function countUp(el) {
+        var target = parseFloat(el.getAttribute('data-count'));
+        if (reduce || !target) { el.textContent = target || 0; return; }
+        var start = performance.now(), dur = 900;
+        function step(now) {
+          var p = Math.min((now - start) / dur, 1);
+          var eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(target * eased);
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
       var io = new IntersectionObserver(function (es) {
-        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+        es.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('in');
+          e.target.querySelectorAll('.count').forEach(countUp);
+          io.unobserve(e.target);
+        });
       }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+
+      // stagger siblings in the same grid
+      var groups = document.querySelectorAll('.lead__grid, .bento, .perf__grid, .gallery__grid, .checks');
+      groups.forEach(function (g) {
+        Array.prototype.forEach.call(g.children, function (c, i) {
+          if (c.classList.contains('reveal')) c.style.transitionDelay = Math.min(i * 70, 420) + 'ms';
+        });
+      });
       document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+
+      // Scroll progress bar
+      var bar = document.querySelector('.progress span');
+      if (bar) {
+        var tick = false;
+        function update() {
+          var h = document.documentElement;
+          var max = h.scrollHeight - h.clientHeight;
+          bar.style.transform = 'scaleX(' + (max > 0 ? h.scrollTop / max : 0) + ')';
+          tick = false;
+        }
+        addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(update); } }, { passive: true });
+        update();
+      }
     })();
   </script>
 </body>
