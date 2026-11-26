@@ -91,9 +91,6 @@ p { text-wrap: pretty; }
 /* Hero two-column layout */
 .hero__grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; column-gap: clamp(32px, 5vw, 80px); align-items: start; }
 .hero__grid > .eyebrow { grid-column: 1 / -1; margin-bottom: clamp(18px, 2.6vw, 28px); }
-.hero__rule { grid-column: 1 / -1; height: 2px; background: var(--red); margin-bottom: clamp(14px, 2vw, 22px); transform-origin: left; }
-.reveal.hero__rule { opacity: 1; transform: scaleX(0); }
-.reveal.hero__rule.in { transform: scaleX(1); }
 .hero__copy { grid-column: 1; min-width: 0; }
 .hero__aside { grid-column: 2; align-self: start; }
 
