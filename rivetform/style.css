@@ -123,7 +123,7 @@ p { text-wrap: pretty; }
 .hero__tag { font-size: clamp(26px, 4.6vw, 52px); font-weight: 700; letter-spacing: -0.03em; margin-top: 10px; }
 .hero__sub { max-width: 54ch; color: #cfceca; font-size: clamp(16px, 1.4vw, 19px); margin-top: 24px; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
-.hero__facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: clamp(48px, 7vw, 80px); border-top: 1px solid var(--line-ink); padding-top: 28px; }
+.hero__facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: clamp(40px, 6vw, 64px); border-top: 1px solid var(--line-ink); padding-top: 28px; }
 .hero__facts dt { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey); }
 .hero__facts dd { font-size: clamp(22px, 2.4vw, 30px); font-weight: 800; letter-spacing: -0.02em; margin-top: 6px; }
 
